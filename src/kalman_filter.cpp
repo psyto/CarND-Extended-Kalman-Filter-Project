@@ -51,12 +51,11 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   VectorXd hx(3);
   float ro = sqrt(pow(x_(0),2) + pow(x_(0),2));
   float theta = atan2(x_(1), x_(0));
-  float ro_dot;
-  if (fabs(ro) < 0.0001) {
-    ro_dot = 0;
-  } else {
-    ro_dot = (x_(0) * x_(2) + x_(1) * x_(3)) / ro;
-  }
+  float ro_dot = (x_(0) * x_(2) + x_(1) * x_(3)) / ro;
+
+  //theta = theta - (2 * M_PI) * floor(theta / (2 * M_PI));
+  theta = theta - (2 * M_PI) * floor((theta + M_PI) / (2 * M_PI));
+
   hx << ro, theta, ro_dot;
 
   VectorXd y = z - hx;
