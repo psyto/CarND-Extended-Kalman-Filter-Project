@@ -49,7 +49,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     * update the state by using Extended Kalman Filter equations
   */
   VectorXd hx(3);
-  float ro = sqrt(pow(x_(0),2) + pow(x_(0),2));
+  float ro = sqrt(pow(x_(0),2) + pow(x_(1),2));
   float theta = atan2(x_(1), x_(0));
   float ro_dot = (x_(0) * x_(2) + x_(1) * x_(3)) / ro;
   hx << ro, theta, ro_dot;
